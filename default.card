@@ -1,0 +1,91 @@
+$type: card
+rules: []
+properties:
+  title:
+    type: element
+    xtype: at-carbon-card-title
+    title: title
+    xgridcols: 12
+    xstyle: 
+    xclass: 
+    actionListeners:
+      - _start
+  content:
+    type: element
+    xtype: at-core-view
+    model: 
+    view: |-
+      {% if showBot == false %}
+      	<div class="layout-horizontal layout-start-aligned layout-center-justified m">
+      		<div class="mx" style="min-width:112px;max-width:112px;min-height:80px;max-height:80px;background-color:#f5f5f5;border-radius:16px"></div>
+      		<div class="layout-vertical layout-center-center pxsm pysm">
+      			<div class="font-body1 pb">I can help you find the legal resources you need (legal contact, team, document, or tool)</div>
+      			<at-carbon-button button-color="blue" label="Go" at-click-action="toggleBot" style="min-width:112px;text-align:center"></at-carbon-button>
+      		</div>
+      	</div>
+      {% else %}
+      	<div class="layout-vertical m layout-center-aligned">
+      		<div class="layout-horizontal layout-start-justified">
+      			<div style="min-width:48px;max-width:48px;min-height:48px;max-height:48px;background-color:#f5f5f5;border-radius:50%"></div>
+      			<div class="legal-team-msg-box layout-vertical psm ml">
+      				<div class="font-body1">Hi! I am a bot created to make it easier for everyone in Cisco to find the legal resources they need. Enter a keyword below.</div>
+      				<at-link class="layout-self-end ptsm" href="/App" label="Learn More">Learn More</at-link>
+      			</div>
+      		</div>
+      		{% if answer %}
+      			<div class="layout-self-end font-title py">{{ input }}</div>
+      			<div class="layout-horizontal layout-start-justified mb">
+      				<div style="min-width:48px;max-width:48px;min-height:48px;max-height:48px;background-color:#f5f5f5;border-radius:50%"></div>
+      				<div class="legal-team-msg-box layout-vertical psm ml">
+      					<div class="font-body1">{{ answer }}</div>
+      					<at-link class="layout-self-end ptsm" href="/App" label="Wrong Answer? Ask for Help">Wrong answer? Ask for Help</at-link>
+      				</div>
+      			</div>
+      		{% else %}
+      			<div class="layout-vertical layout-center-center p m" style="text-align:center">
+      				<div class="font-subhead font-bold pbsm">You can enter keywords like...</div>
+      				<div class="font-body1">Verizon, France, RFP, NDA Central, Intellectual Property</div>
+      			</div>
+      		{% endif %}
+      		<input class="psm" at-input-action="input" placeholder="Enter your keyword here..." value="{{name}}">    
+      	</div>
+      {% endif %}
+
+      <style>
+        .legal-team-msg-box {
+        	background-color: #f5f5f5;
+          border-radius: 8px;
+        }
+      </style>
+    xgridcols: 12
+    xstyle: 
+    xclass: 
+    actionListeners:
+      - _all
+    default: 
+    modelRoot: state.model
+$meta:
+  cardId: -1
+  preview-data: |-
+    {
+      "_hash": "a6c6de93aa9d1e7eb7ac395e290d1512"
+    }
+  preview-mode: live
+  preview-container: event
+  search-term: 
+  service-url: 
+  xclass: 
+  xstyle: 
+  code: |-
+    action.initialize = function(evt) {
+      evt.model.showBot = false;
+    }
+
+    action.toggleBot = function(evt) {
+    	evt.model.showBot = !evt.model.showBot;
+    }
+
+    action.input = function(evt) {
+      evt.model.input = evt.srcElement.value;
+      evt.args.atAgentAction = "input";
+    }

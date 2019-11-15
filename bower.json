@@ -1,0 +1,8 @@
+{
+  "name": "cisco-ask-legal-bot",
+  "version": "0.0.1.42",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  }
+}
